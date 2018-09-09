@@ -13,7 +13,7 @@ const (
 	defaultAuthAddress = "/tmp/trqauthd-unix"
 	trqGetActiveServer = 2
 	bufferSize         = 1024
-	timeout            = 5*time.Second
+	timeout            = 5 * time.Second
 )
 
 func main() {
