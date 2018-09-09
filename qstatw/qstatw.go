@@ -43,12 +43,18 @@ mainLoop:
 			return err
 		}
 
+	render:
 		termbox.Clear(termbox.ColorDefault, termbox.ColorDefault)
 
 		for i := 0; i < len(jobs); i++ {
 			x := 1+i
 			y := 1
 			termbox.SetCell(x, y, '|', termbox.ColorGreen, termbox.ColorDefault)
+		}
+
+		width, _ := termbox.Size()
+		for i := 0; i < width; i++ {
+			termbox.SetCell(i, 10, ' ', termbox.ColorDefault, termbox.ColorGreen)
 		}
 
 		if err := termbox.Flush(); err != nil {
@@ -74,7 +80,7 @@ mainLoop:
 				}
 
 			case termbox.EventResize:
-				//
+				goto render
 
 			case termbox.EventError:
 				return ev.Err
