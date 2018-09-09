@@ -21,7 +21,7 @@ const (
 )
 
 type Job struct {
-	Name  string            `json:"name"`
+	ID    string            `json:"id"`
 	Attrs map[string]string `json:"attributes"`
 }
 
@@ -117,7 +117,7 @@ func queryJobStatus(r *bufio.Reader, w *bufio.Writer) ([]Job, error) {
 			return nil, err
 		}
 
-		name, err := dis.ReadString(r)
+		id, err := dis.ReadString(r)
 		if err != nil {
 			return nil, err
 		}
@@ -128,7 +128,7 @@ func queryJobStatus(r *bufio.Reader, w *bufio.Writer) ([]Job, error) {
 		}
 
 		jobs = append(jobs, Job{
-			Name:  name,
+			ID:    id,
 			Attrs: attrs,
 		})
 	}
