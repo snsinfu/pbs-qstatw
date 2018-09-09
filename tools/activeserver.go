@@ -6,7 +6,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/snsinfu/pbs-qstatw/trq"
+	"github.com/snsinfu/pbs-qstatw/torque"
 )
 
 const (
@@ -45,7 +45,7 @@ func run() error {
 	}
 
 	// Send GET_ACTIVE_SERVER request: "2|"
-	enc := trq.NewEncoder()
+	enc := torque.NewEncoder()
 	enc.PutInt(trqGetActiveServer)
 	msg := enc.String()
 
@@ -60,7 +60,7 @@ func run() error {
 	}
 
 	// Receive response: "err|host|port|"
-	dec := trq.NewDecoder(string(buf[:n]))
+	dec := torque.NewDecoder(string(buf[:n]))
 
 	respCode, err := dec.GetInt()
 	if err != nil {

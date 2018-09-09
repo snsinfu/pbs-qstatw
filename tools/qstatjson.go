@@ -9,7 +9,7 @@ import (
 	"os/user"
 
 	"github.com/snsinfu/pbs-qstatw/dis"
-	"github.com/snsinfu/pbs-qstatw/trq"
+	"github.com/snsinfu/pbs-qstatw/torque"
 )
 
 const (
@@ -240,7 +240,7 @@ func authorizeConnection(conn *net.TCPConn, authAddr string) error {
 	server := conn.RemoteAddr().(*net.TCPAddr)
 	port := conn.LocalAddr().(*net.TCPAddr).Port
 
-	enc := trq.NewEncoder()
+	enc := torque.NewEncoder()
 	enc.PutInt(trqAuthConnection)
 	enc.PutString(server.IP.String())
 	enc.PutInt(server.Port)
@@ -260,7 +260,7 @@ func authorizeConnection(conn *net.TCPConn, authAddr string) error {
 		return err
 	}
 
-	dec := trq.NewDecoder(string(buf[:n]))
+	dec := torque.NewDecoder(string(buf[:n]))
 
 	respCode, err := dec.GetInt()
 	if err != nil {
@@ -281,7 +281,7 @@ func queryActiveServer(authAddr string) (*net.TCPAddr, error) {
 	}
 	defer auth.Close()
 
-	enc := trq.NewEncoder()
+	enc := torque.NewEncoder()
 	enc.PutInt(trqGetActiveServer)
 	msg := []byte(enc.String())
 
@@ -296,7 +296,7 @@ func queryActiveServer(authAddr string) (*net.TCPAddr, error) {
 	}
 
 	// Receive response: "err|host|port|"
-	dec := trq.NewDecoder(string(buf[:n]))
+	dec := torque.NewDecoder(string(buf[:n]))
 
 	respCode, err := dec.GetInt()
 	if err != nil {

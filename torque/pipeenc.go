@@ -1,4 +1,4 @@
-package trq
+package torque
 
 import (
 	"errors"
